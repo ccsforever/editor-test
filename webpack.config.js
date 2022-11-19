@@ -9,7 +9,7 @@ module.exports = {
   },
   entry: {
     app: "./src/index.tsx",
-    "editor.worker": "monaco-editor-core/esm/vs/editor/editor.worker.js",
+    "editor.worker": "monaco-editor/esm/vs/editor/editor.worker.js",
     "javaWorker": './src/java/java.worker.ts'
 
   },

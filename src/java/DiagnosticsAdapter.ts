@@ -1,8 +1,9 @@
-import * as monaco from "monaco-editor-core";
+import * as monaco from "monaco-editor";
 import { WorkerAccessor } from "./setup";
 import { languageID } from "./config";
 import { BlockContext, Java9Parser } from '../ANTLR/Java9Parser';
 import { Ast } from '../language-service/ast';
+import { IJavaError } from "../language-service/java/JavaErrorListener";
 
 // import { ITodoLangError } from "../language-service/TodoLangErrorListener";
 
@@ -34,7 +35,7 @@ export default class DiagnosticsAdapter {
         // get the current model(editor or file) which is only one
         const model = monaco.editor.getModel(resource);
         // add the error markers and underline them with severity of Error
-        // monaco.editor.setModelMarkers(model, languageID, errorMarkers.map(toDiagnostics));
+        monaco.editor.setModelMarkers(model, languageID, errorMarkers.map(toDiagnostics));
     }
     //TODO:AST
     // private async getAST(resource: monaco.Uri): Promise<void> {
@@ -49,9 +50,9 @@ export default class DiagnosticsAdapter {
     //
     // }
 }
-// function toDiagnostics(error: ITodoLangError): monaco.editor.IMarkerData {
-//     return {
-//         ...error,
-//         severity: monaco.MarkerSeverity.Error,
-//     };
-// }
+function toDiagnostics(error: IJavaError): monaco.editor.IMarkerData {
+    return {
+        ...error,
+        severity: monaco.MarkerSeverity.Error,
+    };
+}

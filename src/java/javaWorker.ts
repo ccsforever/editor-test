@@ -1,9 +1,10 @@
-import * as monaco from "monaco-editor-core";
+import * as monaco from "monaco-editor";
 import { Ast } from '../language-service/ast';
 
 import IWorkerContext = monaco.worker.IWorkerContext;
 import { JavaService } from "../language-service/java/JavaService";
 // import { ITodoLangError } from "../language-service/TodoLangErrorListener";
+import { IJavaError } from "../language-service/java/JavaErrorListener";
 import { BlockContext, Java9Parser } from '../ANTLR/Java9Parser';
 import { Injectable } from '@angular/core';
 
@@ -19,9 +20,11 @@ export class JavaWorker {
     this.languageService = new JavaService();
   }
 
-  doValidation(): Promise<BlockContext> {
+  // doValidation(): Promise<BlockContext> {
+  doValidation(): Promise<IJavaError[]> {
     const code = this.getTextDocument();
-    return Promise.resolve(this.languageService.convertCodeToAntlr(code));
+    // return Promise.resolve(this.languageService.convertCodeToAntlr(code));
+    return Promise.resolve(this.languageService.validate(code));
   }
   //TODO:AST
   // getAST(): Promise<Ast> {
